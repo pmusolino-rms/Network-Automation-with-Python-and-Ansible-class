@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+from ciscoconfparse import CiscoConfParse
+
+config = CiscoConfParse("./cisco_ipsec.txt")
+
+def get_children(search):
+  for i in crypto_map:
+    print i.text
+    my_list = i.all_children
+    for j in my_list:
+      print j.text
+    print
+
+crypto_map = config.find_objects(r"crypto map CRYPTO")
+print "All crypto maps"
+print
+get_children(crypto_map)
+print
+
+crypto_map = config.find_objects_w_child(parentspec=r"^crypto map CRYPTO", childspec = r"set pfs group2")
+print "PFS2 maps"
+print
+get_children(crypto_map)
+print
+
+crypto_map = config.find_objects_wo_child(parentspec=r"^crypto map CRYPTO", childspec = r"AES")
+print "Non-AES Maps"
+print
+get_children(crypto_map)
+print
