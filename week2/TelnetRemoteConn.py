@@ -15,10 +15,6 @@ class TelnetRemoteConn(object):
     self.log = ""
     self.prompt = ""
 
-  def logout(self):
-    self.telnet_session.write("exit" + '\n')
-    self.telnet_session.close()
-
   def open_session(self):
     try:
       self.telnet_session = Telnet(self.ip_addr,self.port,self.timeout)
@@ -37,6 +33,10 @@ class TelnetRemoteConn(object):
       self.log += self.prompt
     else:
       self.log += "Unable to Login: No Connection"
+
+  def logout(self):
+    self.telnet_session.write("exit" + '\n')
+    self.telnet_session.close()
 
   def send_command(self,command):
     if (self.telnet_session):
