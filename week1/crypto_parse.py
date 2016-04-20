@@ -6,7 +6,7 @@ config = CiscoConfParse("./cisco_ipsec.txt")
 
 def get_children(search):
   print
-  for i in crypto_map:
+  for i in search:
     print i.text
     my_list = i.all_children
     for j in my_list:
