@@ -22,24 +22,24 @@ class SNMPv3ConfigChangeRetriever(object):
     self.running_last_changed = None
     self.running_last_saved = None
     self.startup = None
-  def __snmp_get(self,oid):
+  def _snmp_get(self,oid):
     data = snmp_get_oid_v3(self.device,self.user,oid=oid,display_errors=False)
     return snmp_extract(data)
   def __get_running_last_changed(self):
     oid = '1.3.6.1.4.1.9.9.43.1.1.1.0'
-    return self.__snmp_get(oid)
+    return self._snmp_get(oid)
   def __get_startup_last_changed(self):
     oid = '1.3.6.1.4.1.9.9.43.1.1.3.0'
-    return self.__snmp_get(oid)
+    return self._snmp_get(oid)
   def __get_running_last_saved(self):
     oid = '1.3.6.1.4.1.9.9.43.1.1.2.0'   
-    return self.__snmp_get(oid)
+    return self._snmp_get(oid)
   def __get_uptime(self):
     oid = "1.3.6.1.2.1.1.3.0"
-    return self.__snmp_get(oid)
+    return self._snmp_get(oid)
   def __get_sysName(self):
     oid = ".1.3.6.1.2.1.1.5.0"
-    return self.__snmp_get(oid)
+    return self._snmp_get(oid)
   def update_counters(self):
     self.uptime = self.__get_uptime()
     self.running_last_changed = self.__get_running_last_changed()
