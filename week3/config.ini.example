@@ -1,0 +1,15 @@
+[snmp_credentials]
+snmp_user = user
+auth_key = authkey
+encrypt_key = encryptkey
+
+[smtp_data]
+sender = "user@example.com"
+recipient = "user@somewherelse.com"
+subject = "Config Diff"
+server = '127.0.0.1'
+
+[device_1]
+ip = 10.0.0.1
+port = 161
+int_index=0
