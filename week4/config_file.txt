@@ -1,0 +1,4 @@
+do show logging 
+logging buffer size 21000
+no logging console
+do show logging

@@ -1,0 +1,11 @@
+[rtr_name]
+user = user
+device_type=cisco
+ip = 1.2.3.4
+port = 22
+
+[rtr_name]
+user = user
+device_type=cisco
+ip = 2.3.4.5
+port = 22
