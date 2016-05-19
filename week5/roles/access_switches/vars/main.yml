@@ -1,0 +1,7 @@
+---
+access_switches:
+  - {hostname: pynet-sw1, ip_addr: 10.1.1.2, access_vlan: 1, default_gateway: 10.1.1.1, secret: itisme, snmp_community: public, SNMPv3: False}
+  - {hostname: pynet-sw2, ip_addr: 10.1.1.3, access_vlan: 1, default_gateway: 10.1.1.1, secret: itisme, snmp_community: public, SNMPv3: False}
+  - {hostname: pynet-sw3, ip_addr: 10.1.1.4, access_vlan: 1, default_gateway: 10.1.1.1, secret: itisme, snmp_community: public, SNMPv3: False}
+  - {hostname: pynet-sw4, ip_addr: 10.1.1.5, access_vlan: 1, default_gateway: 10.1.1.1, secret: itisme, snmp_community: public, SNMPv3: True}
+  - {hostname: pynet-sw5, ip_addr: 10.1.1.6, access_vlan: 1, default_gateway: 10.1.1.1, secret: itisme, snmp_community: public, SNMPv3: True}

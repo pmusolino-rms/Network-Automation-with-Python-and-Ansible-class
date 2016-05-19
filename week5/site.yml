@@ -1,0 +1,5 @@
+---
+- name: Config generation
+  hosts: local
+  roles: 
+    - access_switches

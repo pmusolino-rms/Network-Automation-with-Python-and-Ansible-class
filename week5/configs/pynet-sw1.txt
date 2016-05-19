@@ -1,0 +1,148 @@
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+!
+hostname pynet-sw1
+!
+logging buffered 32000
+no logging console
+enable secret 0 itisme
+!
+!
+!
+!
+interface FastEthernet 0/1
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/2
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/3
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/4
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/5
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/6
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/7
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/8
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/9
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/10
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/11
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/12
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/13
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/14
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/15
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/16
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/17
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/18
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/19
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/20
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/21
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/22
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/23
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet 0/24
+ switchport access vlan 1
+ switchport mode access
+ spanning-tree portfast
+!
+interface Vlan1
+ ip address 10.1.1.2 255.255.255.0
+ no ip route-cache
+!
+ip default-gateway 10.1.1.1
+
+snmp-server community public RO
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+end
