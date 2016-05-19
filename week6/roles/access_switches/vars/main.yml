@@ -1,0 +1,8 @@
+---
+vlans:
+  - { name: mercury, vlanid: 601 }
+  - { name: venus, vlanid: 602 }
+  - { name: earth, vlanid: 603 }
+
+interfaces:
+  - { name: Ethernet4, description: "*** IN USE ***", mode: access, vlanid: 602 }
