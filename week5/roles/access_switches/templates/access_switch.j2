@@ -10,6 +10,8 @@ enable secret 0 {{item.secret}}
 !
 !
 !
+# {% for portnum in range(1,25) %}
+# interface FastEthernet 0/{{portnum}}
 {% for num in "xxxxxxxxxxxxxxxxxxxxxxxx"  %}
 interface FastEthernet 0/{{loop.index}}
  switchport access vlan {{item.access_vlan}}
