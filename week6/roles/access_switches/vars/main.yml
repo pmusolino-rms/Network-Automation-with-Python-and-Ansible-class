@@ -1,8 +1,19 @@
 ---
 vlans:
-  - { name: mercury, vlanid: 601 }
-  - { name: venus, vlanid: 602 }
-  - { name: earth, vlanid: 603 }
+# Adding absent for exercise 3 to delete
+#  - { name: mercury, vlanid: 601, state: present}
+#  - { name: venus, vlanid: 602, state: present}
+#  - { name: earth, vlanid: 603, state: present}
+  - { name: mercury, vlanid: 601, state: absent}
+  - { name: venus, vlanid: 602, state: absent}
+  - { name: earth, vlanid: 603, state: absent}
 
 interfaces:
-  - { name: Ethernet4, description: "*** IN USE ***", mode: access, vlanid: 602 }
+#  Task 1
+#  - { name: Ethernet4, description: "*** IN USE ***", mode: access, vlanid: 602, native_vlan: 1, allowed_vlans: 601,602,603 }
+#
+#  Task2
+#  - { name: Ethernet4, description: "*** IN USE ***", mode: trunk, vlanid: 602, native_vlan: 1, allowed_vlans: "601,602,603" }
+#
+#  Task3
+  - { name: Ethernet4, description: "", mode: access, vlanid: 1, native_vlan: 1, allowed_vlans: 1-4094 }

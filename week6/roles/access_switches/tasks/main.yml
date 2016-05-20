@@ -1,27 +1,38 @@
 ---
-- name: Create Vlans
-  eos_vlan: name={{ item.name }} vlanid={{ item.vlanid }}
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
-  with_items: vlans
+# Uncomment for creation
+#- name: Create Vlans
+#  eos_vlan: name={{ item.name }} vlanid={{ item.vlanid }} state={{ item.state }}
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
+#  with_items: vlans
 
-- name: Configure Ethernet4
-  eos_interface: name={{ item.name }} description="{{ item.description }}"
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
-  with_items: interfaces
+#- name: Configure Ethernet4
+#  eos_interface: name={{ item.name }} description="{{ item.description }}"
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
+#  with_items: interfaces
 
 - name: Configure Switchport
-  eos_switchport: name={{ item.name }} mode={{ item.mode }} access_vlan={{ item.vlanid }}
+  eos_switchport: name={{ item.name }} mode={{ item.mode }} access_vlan={{ item.vlanid }} trunk_native_vlan={{ item.native_vlan }} trunk_allowed_vlans="{{ item.allowed_vlans }}"
     username={{ eapi_username }}
     password={{ eapi_password }}
     host={{ eapi_hostname }}
     port={{ eapi_port }}
     transport=https
   with_items: interfaces
+
+# Uncomment when deleting
+#- name: Create Vlans
+#  eos_vlan: name={{ item.name }} vlanid={{ item.vlanid }} state={{ item.state }}
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
+#  with_items: vlans
