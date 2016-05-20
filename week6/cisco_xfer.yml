@@ -1,0 +1,17 @@
+---
+
+- name: Cisco IOS xfer
+  hosts: cisco
+  gather_facts: False
+
+  tasks:
+  - name: File Xfer
+    cisco_file_transfer:
+      source_file="/home/pmusolino/Network-Automation-with-Python-and-Ansible-class/week6/cisco_commands.txt"
+      dest_file=cisco_commands.txt
+      overwrite=true
+      enable_scp=true
+      host={{ host }}
+      port={{ port }}
+      username={{ username }}
+      password={{ password }}
