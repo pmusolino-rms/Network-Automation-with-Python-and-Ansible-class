@@ -1,0 +1,9 @@
+---
+- name: Add Vlan
+  eapi_vlan_add: vlan_name={{ item.name }} vlan_id={{ item.vlan_id }}
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+  with_items: vlans

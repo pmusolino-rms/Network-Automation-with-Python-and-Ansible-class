@@ -1,0 +1,5 @@
+---
+- name: Vlan configuration
+  hosts: arista
+  roles: 
+    - access_switches

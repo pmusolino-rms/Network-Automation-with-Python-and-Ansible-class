@@ -18,33 +18,52 @@ class AristaNetworkAdmin(object):
   def __get_vlan(self,vlan_id):
     return self.vlans.get(vlan_id)
 
-  def vlan_add(self,vlan):
-    if self.__get_vlan(vlan.vlan_id):
-      print"Vlan %s already exists!" %vlan.vlan_id
-      exit(1)
+  def vlan_exists(self,vlan):
+    vl=self.__get_vlan(vlan.vlan_id)
+    if vl:
+      return True
     else:
-      print "Adding vlan %s with name %s" %(vlan.vlan_id,vlan.name)
-      self.vlans.create(vlan.vlan_id)
-      self.vlans.set_name(vlan.vlan_id,vlan.name)
+      return False
+
+  def vlan_add(self,vlan):
+    vl=self.__get_vlan(vlan.vlan_id)
+    if (vl):
+      if (vl['name'] == vl.name):
+        return False
+      #print"Vlan %s already exists!" %vlan.vlan_id
+      #exit(1)
+    else:
+      #print "Adding vlan %s with name %s" %(vlan.vlan_id,vlan.name)
+      if vl:
+        self.vlans.set_name(vlan.vlan_id,vlan.name)
+      else:
+        self.vlans.create(vlan.vlan_id)
+        self.vlans.set_name(vlan.vlan_id,vlan.name)
+      return True
 
   def vlan_remove(self,vlan):
     if not self.__get_vlan(vlan.vlan_id):
-      print"Vlan %s does not exist!" %vlan.vlan_id
-      exit(1)
+      #print"Vlan %s does not exist!" %vlan.vlan_id
+      #exit(1)
+      return False
     else:
       print "Deleting %s" %vlan.vlan_id
       self.vlans.delete(vlan.vlan_id)
+      return True
 
   def vlan_list(self,vlan):
     if vlan.name == "all":
       for vl in list(self.vlans.values()):
         print(("   Vlan Id: {vlan_id}, Name: {name}".format(**vl)))
+      return list(self.vlans.values()) 
     else:
       vl=self.__get_vlan(vlan.vlan_id)
       if vl:
-        print "  Vlan ID: {}, Name: {}".format(vl['vlan_id'],vl['name'])
+        #print "  Vlan ID: {}, Name: {}".format(vl['vlan_id'],vl['name'])
+        return vl
       else:
         print "Vlan %s does not exist!" %vlan.vlan_id
+        return
 
 def parseArgs():
   parser = argparse.ArgumentParser(description='Add or create Vlans on Aristas')
@@ -90,11 +109,19 @@ def main():
   vlan=Vlan(vlan_id,name)
   network_admin=AristaNetworkAdmin(switch)
   if mode=="add":
-    network_admin.vlan_add(vlan)
+    status=network_admin.vlan_add(vlan)
+    if not status:
+      print "Vlan already exists!"
+    else:
+      print "Vlan created!"
   if mode=="list":
     network_admin.vlan_list(vlan)
   if mode=="remove":
-    network_admin.vlan_remove(vlan)  
-  
+    status=network_admin.vlan_remove(vlan)
+    if not status:
+      print "Vlan does not exist!"
+    else:
+      print "Vlan removed!"
+
 if __name__ == "__main__":
   main()
