@@ -30,19 +30,30 @@ def main():
   network_admin = AristaNetworkAdmin(switch)
   vlan=Vlan(module.params['vlan_id'],module.params['vlan_name'])
 
-  if network_admin.vlan_exists(vlan):
-    module.exit_json(msg="vlan exists", changed=False)
-  if module.check_mode:
+  with open("/tmp/eapi.log","w+") as f:
     if network_admin.vlan_exists(vlan):
-      module.exit_json(msg="Vlan already exits",changed=False)
-    module.exit(msg="Check mode: Vlan would be added or updated with a new name",changed=True)
+      f.write("Exists: " + str(network_admin.vlan_exists(vlan)) + "\n")
+      f.write("DEBUG: vlan %s with id %s exists \n" %(vlan.name,vlan.vlan_id))
+      module.exit_json(msg="vlan exists", changed=False)
+    else:
+      f.write("DEBUG: vlan %s with id %s does not exist or has a different name \n" %(vlan.name,vlan.vlan_id))
 
-  status=network_admin.vlan_add(vlan)
-  vl=network_admin.vlan_list(vlan)
-  if status and vl:
-    module.exit_json(msg="Vlan successfully added/modified",changed=True)
-  else:
-    module.fail_json(msg="Vlan failed to add")
+    if module.check_mode:
+      if network_admin.vlan_exists(vlan):
+        f.write("Check Mode: Vlan already exists\n")
+        module.exit_json(msg="Vlan already exits",changed=False)
+      module.exit(msg="Check mode: Vlan would be added or updated with a new name",changed=True)
+    
+    f.write("Attempting add\n")
+    status=network_admin.vlan_add(vlan)
+    f.write("Add complete with result %s\n" %(str(status)))
+    vl=network_admin.vlan_list(vlan)
+    if status and vl:
+      f.write("Vlan changed\n")
+      module.exit_json(msg="Vlan successfully added/modified",changed=True)
+    else:
+      f.write("failed to add vlan\n")
+      module.fail_json(msg="Vlan failed to add")
 
 if __name__ == '__main__':
     main()

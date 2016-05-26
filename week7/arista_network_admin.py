@@ -21,24 +21,28 @@ class AristaNetworkAdmin(object):
   def vlan_exists(self,vlan):
     vl=self.__get_vlan(vlan.vlan_id)
     if vl:
-      return True
+      if vl['name'] == vlan.name:
+        return True
+      else:
+        return False
     else:
       return False
 
   def vlan_add(self,vlan):
+    
     vl=self.__get_vlan(vlan.vlan_id)
-    if (vl):
-      if (vl['name'] == vl.name):
+    if vl:
+      if (vl['name'] == vlan.name):
         return False
       #print"Vlan %s already exists!" %vlan.vlan_id
       #exit(1)
+      else:
+        self.vlans.set_name(vlan.vlan_id,vlan.name)
+        return True
     else:
       #print "Adding vlan %s with name %s" %(vlan.vlan_id,vlan.name)
-      if vl:
-        self.vlans.set_name(vlan.vlan_id,vlan.name)
-      else:
-        self.vlans.create(vlan.vlan_id)
-        self.vlans.set_name(vlan.vlan_id,vlan.name)
+      self.vlans.create(vlan.vlan_id)
+      self.vlans.set_name(vlan.vlan_id,vlan.name)
       return True
 
   def vlan_remove(self,vlan):

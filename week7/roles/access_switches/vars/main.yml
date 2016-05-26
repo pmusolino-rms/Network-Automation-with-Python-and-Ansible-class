@@ -1,3 +1,4 @@
 ---
 vlans:
-  - { name: mercury, vlan_id: 601, state: present}
+  - { name: venus, vlan_id: 601, state: present}
+  - { name: pluto, vlan_id: 602, state: present}
