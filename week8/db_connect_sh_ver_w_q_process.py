@@ -1,45 +1,65 @@
 #!/usr/bin/env pyhthon
-import django
-from netmiko import ConnectHandler
-from net_system.models import NetworkDevice, Credentials
-from multiprocessing import Process,current_process,Queue
-from datetime import datetime
+'''
+Program to access a Django database to create connections
+to all devices contained therein.
+A command is run to get the show version output of each device
+The program utilizes multiple processes and Queues to deserialize the I/O
+and organize them by device
+'''
 
-def show_version(dev,q):
-  output_dict = {}
-  output = "#" * 80
-  output += "\n"
-  conn = ConnectHandler(device_type=dev.device_type,ip=dev.ip_address,username=dev.credentials.username,password=dev.credentials.password,port=dev.port)
-  output += conn.send_command_expect('show version')
-  output += "#" * 80
-  output += "\n\n"
-  output_dict[dev.device_name]=output
-  q.put(output_dict)
+from multiprocessing import Process, Queue
+from datetime import datetime
+from net_system.models import NetworkDevice
+from netmiko import ConnectHandler
+import django
+
+def show_version(dev, queue):
+    '''
+    Function to show the devices version
+    Uses a Queue to sort output from the multiple processes
+    '''
+    output_dict = {}
+    output = "#" * 80
+    output += "\n"
+    conn = ConnectHandler(device_type=dev.device_type, ip=dev.ip_address,
+                          username=dev.credentials.username, password=dev.credentials.password,
+                          port=dev.port)
+    output += conn.send_command_expect('show version')
+    output += "#" * 80
+    output += "\n\n"
+    output_dict[dev.device_name] = output
+    queue.put(output_dict)
 
 def main():
-  django.setup()
+    '''
+    Main function which sets up variables
+    Starts other processes
+    iterates through devices in database
+    '''
 
-  devices = NetworkDevice.objects.all()
-  starttime=datetime.now()
-  q=Queue(maxsize=20)
-  procs = []
-  for dev in devices:
-    my_proc=Process(target=show_version, args=(dev,q))
-    my_proc.start()
-    procs.append(my_proc)
+    django.setup()
 
-  for proc in procs:
-      proc.join()
+    devices = NetworkDevice.objects.all()
+    starttime = datetime.now()
+    queue = Queue(maxsize=20)
+    procs = []
+    for dev in devices:
+        my_proc = Process(target=show_version, args=(dev, queue))
+        my_proc.start()
+        procs.append(my_proc)
 
-  while not q.empty():
-    my_dict = q.get()
-    for k,v in my_dict.iteritems():
-      print k
-      print v
+    for proc in procs:
+        proc.join()
 
-  totaltime=datetime.now() - starttime
-  print
-  print "Elapsed time " + str(totaltime)
-  print
+    while not queue.empty():
+        my_dict = queue.get()
+        for key, value in my_dict.iteritems():
+            print key
+            print value
+
+    totaltime = datetime.now() - starttime
+    print
+    print "Elapsed time " + str(totaltime)
+    print
 if __name__ == '__main__':
-  main()
+    main()
