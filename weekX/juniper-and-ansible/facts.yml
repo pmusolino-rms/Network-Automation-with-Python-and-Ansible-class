@@ -1,0 +1,13 @@
+---
+- name: Just the facts maam
+  hosts: pynet-sf-srx
+  tasks:
+    - name: Juniper connection test
+      wait_for: host={{ ansible_ssh_host }} port=830
+
+    - name: Retrieve the facts
+      junos_get_facts:  host={{ ansible_ssh_host }} user={{ juniper_user }} passwd={{ juniper_passwd }}
+      register: srx_info
+
+    - name: Print info
+      debug: msg="{{ srx_info.facts }}"

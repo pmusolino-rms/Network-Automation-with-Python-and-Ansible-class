@@ -1,0 +1,10 @@
+---
+- name: Just the facts maam
+  hosts: pynet-sf-srx
+  tasks:
+    - name: Juniper connection test
+      wait_for: host={{ ansible_ssh_host }} port=830
+
+    - name: Change hostname
+      junos_install_config:
+          host={{ ansible_ssh_host }} file=hostname.xml overwrite=false user={{ juniper_user }} passwd={{ juniper_passwd }}
