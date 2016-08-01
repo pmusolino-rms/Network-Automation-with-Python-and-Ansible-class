@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 
-from pprint import pprint
-from juniper_connection import juniper_connection_setup,JuniperObject
+from juniper_connection import juniper_connection_setup, JuniperObject
+
 
 def main():
    
-   dev = juniper_connection_setup()
-   juniper_object = JuniperObject(dev)
-   juniper_object.show_all_interfaces()
+    dev = juniper_connection_setup()
+    juniper_object = JuniperObject(dev)
+    juniper_object.show_all_interfaces()
 
 if __name__ == "__main__":
     main()

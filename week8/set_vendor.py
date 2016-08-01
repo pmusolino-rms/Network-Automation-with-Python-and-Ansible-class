@@ -1,16 +1,17 @@
 #!/usr/bin/env python
-'''
+"""
 Program to use Django DB and update
 vendor field based on device type
-'''
+"""
 
 import django
 from net_system.models import NetworkDevice
 
+
 def main():
-    '''
+    """
     Main function doing all the heavy lifting
-   '''
+    """
 
     django.setup()
 

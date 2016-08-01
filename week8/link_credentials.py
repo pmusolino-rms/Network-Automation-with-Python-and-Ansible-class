@@ -1,15 +1,16 @@
 #!/usr/bin/env python
-'''
+"""
 Program to link credentials to network device based on device name
-'''
+"""
 
 import django
 from net_system.models import NetworkDevice, Credentials
 
+
 def main():
-    '''
+    """
     Main Process
-    '''
+    """
     django.setup()
 
     devices = NetworkDevice.objects.all()

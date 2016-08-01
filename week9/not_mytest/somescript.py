@@ -2,12 +2,13 @@
 
 from mytest import *
 
+
 def main():
     hello()
     keep_it()
     man()
 
-    a = MyClass(10,20,101)
+    a = MyClass(10, 20, 101)
     a.hello()
     a.not_hello()
 

@@ -3,17 +3,18 @@
 import django
 from net_system.models import NetworkDevice, Credentials
 
+
 def main():
-  django.setup()
+    django.setup()
 
-  devices = NetworkDevice.objects.all()
+    devices = NetworkDevice.objects.all()
 
-  for dev in devices:
-    if 'test' in dev.device_name:
-      print dev.device_name
-      dev.delete()
-    else:
-      next
+    for dev in devices:
+        if 'test' in dev.device_name:
+            print dev.device_name
+            dev.delete()
+        else:
+            next
 
 if __name__ == '__main__':
-  main()
+    main()

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 class ANetworkDevice(object):
 
     def __init__(self, ip, user, passwd):
@@ -12,11 +13,13 @@ class ANetworkDevice(object):
         print "Username: {}".format(self.username)
         print "Password: {}".format(self.password)
 
-    def change_password(self,newpass):
+    def change_password(self, newpass):
         self.password = newpass
 
+
 if __name__ == "__main__":
-    # if the variable is equal to the name of a function or the attribute in a class, it can be referenced using get_attr
+    # if the variable is equal to the name of a function or the attribute in a class,
+    # it can be referenced using get_attr
     a_var = 'ip'
     some_device = ANetworkDevice("1.1.1.2", "my_name", "password")
     some_device.show_device()

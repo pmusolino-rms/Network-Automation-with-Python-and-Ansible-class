@@ -1,6 +1,9 @@
 #!/usr/bin/env python
+
+
 def man():
     print "Whatever man"
+
 
 def main():
     print "{} of whatever".format(__name__)

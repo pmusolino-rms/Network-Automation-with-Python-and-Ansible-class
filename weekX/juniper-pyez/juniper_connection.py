@@ -8,8 +8,9 @@ from jnpr.junos.utils.config import Config
 from net_system.models import NetworkDevice
 import django
 
+
 class JuniperObject(object):
-    def __init__(self,jnp_dev):
+    def __init__(self, jnp_dev):
         self.conn = jnp_dev
         self.config = None
         self.ports = {}
@@ -28,15 +29,15 @@ class JuniperObject(object):
         self.config.lock()
 
     def send_command(self, command, cmd_format, cmd_merge):
-       self.config.load(command, format=cmd_format, merge=cmd_merge)
+        self.config.load(command, format=cmd_format, merge=cmd_merge)
 
-    def file_command(self,file_path,file_format,file_merge):
+    def file_command(self, file_path, file_format, file_merge):
         self.config.load(path=file_path, format=file_format, merge=file_merge)
    
     def get_diff(self):
         return self.config.diff()
 
-    def commit(self,comment=None):
+    def commit(self, comment=None):
         self.config.commit(comment=comment)
    
     def rollback(self):
@@ -66,18 +67,20 @@ class JuniperObject(object):
             print "  via: {}".format(self.routes[my_key]['via'])
             print "  Protocol: {}".format(self.routes[my_key]['protocol'])
 
-def juniper_connection_setup():
-   django.setup()
 
-   device = NetworkDevice.objects.get(device_name='juniper-srx')
-   print "Connecting to device: %s" %device.device_name
-   jnp_dev = Device(host=device.ip_address,user=device.credentials.username,password=device.credentials.password)
-   jnp_dev.open()
-   jnp_dev.timeout = 120
-   if jnp_dev.facts:
-       return jnp_dev
-   else:
-       return None
+def juniper_connection_setup():
+    django.setup()
+
+    device = NetworkDevice.objects.get(device_name='juniper-srx')
+    print "Connecting to device: %s" % device.device_name
+    jnp_dev = Device(host=device.ip_address, user=device.credentials.username, password=device.credentials.password)
+    jnp_dev.open()
+    jnp_dev.timeout = 120
+    if jnp_dev.facts:
+        return jnp_dev
+    else:
+        return None
+
 
 def main():
     print "Juniper connection setup"

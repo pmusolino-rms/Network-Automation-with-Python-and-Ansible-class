@@ -11,16 +11,19 @@ class MyClass(object):
     def not_hello(self):
         print "Goodbye: {} {} {}".format(self.a, self.b, self.c)
 
+
 class MyChildClass(MyClass):
     def __init__(self, a, b, c, d):
-        MyClass.__init__(self,a, b, c)
+        MyClass.__init__(self, a, b, c)
         self.d = d
         
     def hello(self):
         print "New Hello: {} {} {} {}".format(self.a, self.b, self.c, self.d) 
 
+
 def hello():
     print "Hello World"
+
 
 def main():
     print "{} of world".format(__name__)

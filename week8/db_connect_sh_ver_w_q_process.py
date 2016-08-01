@@ -1,11 +1,11 @@
 #!/usr/bin/env pyhthon
-'''
+"""
 Program to access a Django database to create connections
 to all devices contained therein.
 A command is run to get the show version output of each device
 The program utilizes multiple processes and Queues to deserialize the I/O
 and organize them by device
-'''
+"""
 
 from multiprocessing import Process, Queue
 from datetime import datetime
@@ -13,11 +13,12 @@ from net_system.models import NetworkDevice
 from netmiko import ConnectHandler
 import django
 
+
 def show_version(dev, queue):
-    '''
+    """
     Function to show the devices version
     Uses a Queue to sort output from the multiple processes
-    '''
+    """
     output_dict = {}
     output = "#" * 80
     output += "\n"
@@ -30,12 +31,13 @@ def show_version(dev, queue):
     output_dict[dev.device_name] = output
     queue.put(output_dict)
 
+
 def main():
-    '''
+    """
     Main function which sets up variables
     Starts other processes
     iterates through devices in database
-    '''
+    """
 
     django.setup()
 
@@ -61,5 +63,6 @@ def main():
     print
     print "Elapsed time " + str(totaltime)
     print
+
 if __name__ == '__main__':
     main()
